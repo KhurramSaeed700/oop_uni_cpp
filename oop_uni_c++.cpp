@@ -94,13 +94,12 @@ int main() {
 
 
 #include<iostream>
-
 #include<string>
-
 using namespace std;
 
 class customer
 {
+protected:
     string name, address;
     int cnic, id;
 public:
@@ -118,21 +117,19 @@ public:
     void customer_output()
     {
         cout << " your name : " << name << endl;
-
         cout << "your id : " << id << endl;
-
         cout << "your cnic: " << cnic << endl;
-
         cout << "Enter your address : " << address << endl;
     }
 };
-class daily_customer : customer
-{
 
+class daily_customer : public customer
+{
+protected:
     int qty;
     int price = 100;
 public:
-    static int count_daily_cust = 0;
+    static int count_daily_cust;
     void bill_calculation()
     {
         cout << "Enter quantity of milk : ";
@@ -141,17 +138,18 @@ public:
     }
     void diplay_bill()
     {
-        cout << "your quantity of milk : " << qty;
+        cout << "your quantity of milk : " << qty << endl;
         cout << "your total price is : " << price * qty << endl;
     }
 };
-class mountly_customer : customer
-{
 
+class mountly_customer : public customer
+{
+protected:
     int qty, mounth_days = 0;
     int price = 100;
 public:
-    static int count_monthly_cust = 0;
+    static int count_monthly_cust;
     void montly_bill_calculation()
     {
         cout << "Enter your day for buying milk : ";
@@ -162,36 +160,35 @@ public:
     }
     void monthly_diplay_bill()
     {
-        cout << "your quantity of milk : " << qty;
+        cout << "your quantity of milk : " << qty << endl;
         cout << "Enter your day for buying milk : " << mounth_days << endl;
         cout << "your total price is : " << price * qty << endl;
     }
 };
+
 int main()
 {
-    char cho;
-    customer c1;
+    char cho{};
 
-    cout << "press D if you are daily customer or press m if you are mountly customer" << endl;
-    if (cho == 'd' || cho == 'D')
+    cout << "WELCOME\npress d if you are daily customer\npress m if you are mountly customer\nchoice: ";
+    cin >> cho;
+    if (cho == 'd'||cho == 'D')
     {
+        daily_customer c1;
         c1.customer_input();
-        cl.bill_calculation();
+        c1.bill_calculation();
+        c1.customer_output();
         c1.diplay_bill();
-        c1.customer_output();
-
     }
-    else
-
-    {
-        c1.customer_input();
-        cl.monthly_bill_calculation();
-        c1.monthly_diplay_bill();
-        c1.customer_output();
+    else {
+        mountly_customer c2;
+        c2.customer_input();
+        c2.montly_bill_calculation();
+        c2.customer_output();
+        c2.monthly_diplay_bill();
 
     }
 
     return 0;
 
 }
-
